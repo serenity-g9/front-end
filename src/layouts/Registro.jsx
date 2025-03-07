@@ -329,23 +329,27 @@ const Registro = ({
               <Box className="flexRowCenter" gap={1}>
                 {!struct.object.readOnly && (
                   <>
-                    <Button
-                      disabled={editando}
-                      variant="contained"
-                      color="secondary"
-                      startIcon={<EditIcon />}
-                      onClick={handleEditarObjeto}
-                    >
-                      Editar
-                    </Button>
-                    <Button
-                      disabled={editando}
-                      variant="outlined"
-                      startIcon={<DeleteIcon />}
-                      onClick={handleDeletar}
-                    >
-                      Excluir
-                    </Button>
+                    {!struct.config?.blockEdit && (
+                      <Button
+                        disabled={editando}
+                        variant="contained"
+                        color="secondary"
+                        startIcon={<EditIcon />}
+                        onClick={handleEditarObjeto}
+                      >
+                        Editar
+                      </Button>
+                    )}
+                    {!struct.config?.blockDelete && (
+                      <Button
+                        disabled={editando}
+                        variant="outlined"
+                        startIcon={<DeleteIcon />}
+                        onClick={handleDeletar}
+                      >
+                        Excluir
+                      </Button>
+                    )}
                   </>
                 )}
                 {struct.headerActions && (
@@ -463,6 +467,7 @@ const Registro = ({
                                           value={dayjs(value)}
                                           errorMsg={field.errorMsg}
                                           erros={erros}
+                                          disablePast={field.disablePast}
                                         />
                                       )) ||
                                       (!editando && (
