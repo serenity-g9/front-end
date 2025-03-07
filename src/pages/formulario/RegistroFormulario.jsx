@@ -55,13 +55,14 @@ const RegistroFormulario = () => {
         alerta.error(
           "Erro ao buscar resposta, verifique as configurações de acesso ao formulário selecionado"
         );
+        navigate("/formularios");
         return;
       }
 
       setFormData(response);
       setLoading(false);
     })();
-  }, [recordId, alerta]);
+  }, [recordId]);
 
   const getRespostas = (respostas, tipo) => {
     const baseStyle = {
