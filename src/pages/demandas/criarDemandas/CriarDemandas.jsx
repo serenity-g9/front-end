@@ -178,6 +178,10 @@ const CriarDemandas = () => {
     });
   }, [erros]);
 
+  useEffect(() => {
+    setErros([]);
+  }, [step]);
+
   return (
     <>
       <PageModal>

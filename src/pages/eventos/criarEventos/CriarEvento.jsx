@@ -40,6 +40,10 @@ const CriarEvento = () => {
     setStep(step + 1);
   };
 
+  useEffect(() => {
+    setErros([]);
+  }, [step]);
+
   const handleConcluir = async () => {
     setLoading(true);
 
