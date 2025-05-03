@@ -1,4 +1,4 @@
-name: Build Docker Image
+name: Build and Validate Docker Container
 
 on:
   pull_request:
@@ -15,4 +15,34 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_HUB_IMAGE }} .
+          echo "Building Docker image..."
+          docker build -t ${{ secrets.DOCKER_HUB_IMAGE }} . || {
+            echo "Docker build failed"
+            exit 1
+          }
+
+      - name: Run Docker Container
+        run: |
+          echo "Starting Docker container..."
+          docker run -d --name test_container ${{ secrets.DOCKER_HUB_IMAGE }} || {
+            echo "Failed to start container"
+            exit 1
+          }
+
+      - name: Wait and Validate Container is Running
+        run: |
+          echo "Waiting for container to start..."
+          sleep 3
+          if [ "$(docker inspect -f '{{.State.Running}}' test_container)" = "true" ]; then
+            echo "Container is running"
+          else
+            echo "Container failed to start"
+            echo "Container logs:"
+            docker logs test_container
+            exit 1
+          fi
+
+      - name: Cleanup Docker Container
+        run: |
+          echo "Cleaning up Docker container..."
+          docker rm -f test_container || true
