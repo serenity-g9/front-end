@@ -4,9 +4,7 @@ import Cookies from 'js-cookie';
 
 export const logar = async (dados) => {
   try {
-    const ipResponse = await axios.get('https://api.ipify.org?format=json');
-    const ip = ipResponse?.data?.ip;
-    Cookies.set("IP", ip);
+    Cookies.set("IP", window.location.hostname);
 
     const response = await axios.post(urlData + "usuarios/login", {
       email: dados.email,
