@@ -166,4 +166,7 @@ export const exportData = async (resource, params) => {
   }
 };
 
-export const urlData = "http://52.207.4.43:80/api/";
+export const urlData = (() => {
+  const ip = Cookies.get('IP')
+  return `http://${ip}:80/api/`;
+})();
