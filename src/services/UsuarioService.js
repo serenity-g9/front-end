@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 export const logar = async (dados) => {
   try {
-    Cookies.set("IP", window.location.hostname);
+    // Cookies.set("IP", window.location.hostname);
 
     const response = await axios.post(urlData + "usuarios/login", {
       email: dados.email,
