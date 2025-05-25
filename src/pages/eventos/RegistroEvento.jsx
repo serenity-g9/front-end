@@ -137,39 +137,39 @@ const RegistroEvento = () => {
       },
       flex: 1,
     },
-    {
-      field: "actions",
-      headerName: "Ações",
-      headerAlign: "center",
-      width: 160,
-      sortable: false,
-      filterable: false,
-      renderCell: (params) => (
-        <span
-          style={{
-            display: "flex",
-            height: "100%",
-            justifyContent: "center",
-            padding: "6px",
-          }}
-        >
-          <ButtonBase
-            key={`view-${params.id}`}
-            sx={{ marginRight: 0.5, borderRadius: 2 }}
-            onClick={() => navigate("/demandas/" + params.id)}
-          >
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              width={39}
-            >
-              <VisibilityIcon sx={{ color: "#515151" }} />
-            </Box>
-          </ButtonBase>
-        </span>
-      ),
-    },
+    // {
+    //   field: "actions",
+    //   headerName: "Ações",
+    //   headerAlign: "center",
+    //   width: 160,
+    //   sortable: false,
+    //   filterable: false,
+    //   renderCell: (params) => (
+    //     <span
+    //       style={{
+    //         display: "flex",
+    //         height: "100%",
+    //         justifyContent: "center",
+    //         padding: "6px",
+    //       }}
+    //     >
+    //       <ButtonBase
+    //         key={`view-${params.id}`}
+    //         sx={{ marginRight: 0.5, borderRadius: 2 }}
+    //         onClick={() => navigate("/demandas/" + params.id)}
+    //       >
+    //         <Box
+    //           display={"flex"}
+    //           alignItems={"center"}
+    //           justifyContent={"center"}
+    //           width={39}
+    //         >
+    //           <VisibilityIcon sx={{ color: "#515151" }} />
+    //         </Box>
+    //       </ButtonBase>
+    //     </span>
+    //   ),
+    // },
   ];
 
   const struct = {

@@ -135,7 +135,7 @@ const CriarDemandas = () => {
         );
       } catch (err) {
         //console.log("Erro ao buscar evento: " + err);
-        alerta.success("Erro ao buscar evento");
+        alerta.error("Erro ao buscar responsáveis");
       }
     };
 
@@ -177,6 +177,10 @@ const CriarDemandas = () => {
       return false;
     });
   }, [erros]);
+
+  useEffect(() => {
+    setErros([]);
+  }, [step]);
 
   return (
     <>
