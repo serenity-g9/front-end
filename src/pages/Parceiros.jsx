@@ -47,7 +47,7 @@ const Parceiros = () => {
   useEffect(() => {
     (async () => {
       const response = await fetchData("usuarios");
-
+      console.log("oi");
       if (response.error) {
         alerta.error("Não foi possível buscar usuários");
         return;
@@ -55,7 +55,7 @@ const Parceiros = () => {
 
       setUsuariosData(response);
     })();
-  }, [setUsuariosData, usuariosData]);
+  }, [setUsuariosData, alerta]);
 
   useEffect(() => {
     const a = status === "desativado";
@@ -93,7 +93,7 @@ const Parceiros = () => {
                 size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}
                 key={index}
               >
-                <CardUsuario setUsuariosData={setUsuariosData} user={usuario} />
+                <CardUsuario user={usuario} />
               </Grid>
             );
           })}
@@ -102,7 +102,7 @@ const Parceiros = () => {
   );
 };
 
-const CardUsuario = ({ user, setUsuariosData }) => {
+const CardUsuario = ({ user }) => {
   const navigate = useNavigate();
 
   const alerta = useAlerta();
@@ -117,7 +117,6 @@ const CardUsuario = ({ user, setUsuariosData }) => {
         return;
       }
 
-      setUsuariosData([]);
       alerta.success(`Usuário ${user.contato.nome} desativado com sucesso`);
     });
 
