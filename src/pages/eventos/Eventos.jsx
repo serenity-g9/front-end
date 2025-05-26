@@ -188,7 +188,7 @@ const Eventos = () => {
     { id: "nao-iniciado", value: "Não iniciado" },
     { id: "em-andamento", value: "Em andamento" },
     { id: "finalizado", value: "Finalizado" },
-    { id: "todos", value: "Todos" },
+    { id: "todos", value: "Todos", isDefault: true },
   ];
 
   const handleSearchChange = (e) => {

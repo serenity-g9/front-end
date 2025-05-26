@@ -138,7 +138,11 @@ const Demandas = () => {
     <Box>
       <MudarVisualizacao
         setVisualizacao={setVisualizacao}
-        opcoesFiltro={["Abertas", "Fechadas", "Totais"]}
+        opcoesFiltro={[
+          { id: "abertas", value: "Abertas" },
+          { id: "em-andamento", value: "Fechadas" },
+          { id: "totais", value: "Totais", isDefault: true },
+        ]}
       />
       {visualizacao === "cards" && (
         <Box display={"flex"} flexWrap={"wrap"} gap={2}>

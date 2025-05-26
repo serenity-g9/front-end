@@ -167,6 +167,8 @@ export const exportData = async (resource, params) => {
 };
 
 export const urlData = (() => {
-  const ip = Cookies.get('IP')
-  return `http://${ip}:80/api/`;
+  const hostname = window.location.hostname;
+  const port = hostname === 'localhost' ? '8080' : '80';
+
+  return `http://${hostname}:${port}/api/`;
 })();

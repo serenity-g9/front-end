@@ -80,7 +80,7 @@ const ConfirmarAgendamento = () => {
         {/* <Grid2 item size={4}>
           <Box className="flexColumnCenter">
             <Box width="60%">
-              <img width="100%" src="https://via.placeholder.com/150" />
+              <img width="100%" src="https://dummyimage.com/800x800/eee/000" />
             </Box>
             <Rating defaultValue={4} precision={0.5} readOnly />
             <Typography>Detalhes do agendamento </Typography>

@@ -1,10 +1,10 @@
 import axios from "axios";
-import { urlData } from "./DataService";
+import { patchData, urlData } from "./DataService";
 import Cookies from 'js-cookie';
 
 export const logar = async (dados) => {
   try {
-    Cookies.set("IP", window.location.hostname);
+    // Cookies.set("IP", window.location.hostname);
 
     const response = await axios.post(urlData + "usuarios/login", {
       email: dados.email,
@@ -40,3 +40,16 @@ export const cadastrar = async (request) => {
     };
   }
 };
+
+export const ativar = async (id) => {
+  return await alterarAtivo(id, true);
+}
+
+export const desativar = async (id) => {
+  return await alterarAtivo(id, false);
+}
+
+const alterarAtivo = async (id, ativo) => {
+  return await patchData('usuarios', id, `alterar-ativo/${ativo}`);
+};
+

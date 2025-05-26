@@ -124,7 +124,7 @@ const PaginaUsuario = () => {
         <Box sx={{ maxWidth: "300px", textAlign: "center", mr: 3 }}>
           <CardMedia
             component="img"
-            image="https://via.placeholder.com/150"
+            image="https://dummyimage.com/800x800/eee/000"
             alt="Foto de perfil"
             sx={{
               width: 280,
