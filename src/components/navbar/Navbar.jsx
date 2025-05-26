@@ -98,7 +98,7 @@ const MenuPerfil = () => {
           </Typography>
         </MenuItem>
         <Divider />
-        <MenuItem
+        {/* <MenuItem
           id="item6"
           component={Link}
           to="/configuracoes"
@@ -109,7 +109,7 @@ const MenuPerfil = () => {
             Configurações
           </Typography>
         </MenuItem>
-        <Divider />
+        <Divider /> */}
         <MenuItem id="item7" onClick={handleLogout}>
           <LogoutIcon sx={{ fontSize: 20 }} />
           <Typography ml={1} mr={2}>
@@ -136,7 +136,7 @@ const Notificacoes = () => {
 
   return (
     <Box sx={{ display: "flex", gap: 0, alignItems: "flex-end" }}>
-      <Tooltip title="Notificações">
+      {/* <Tooltip title="Notificações">
         <ButtonBase
           centerRipple
           onClick={handleClick}
@@ -155,7 +155,7 @@ const Notificacoes = () => {
             <NotificationsIcon sx={{ fontSize: 30 }} />
           </Box>
         </ButtonBase>
-      </Tooltip>
+      </Tooltip> */}
       <Menu
         anchorEl={anchorEl}
         open={open}
