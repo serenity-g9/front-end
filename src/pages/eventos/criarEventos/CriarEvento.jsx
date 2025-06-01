@@ -180,14 +180,16 @@ const CriarEvento = () => {
         const data = await fetchData(`usuarios`);
 
         const responsaveisData = data
-          .filter((user) => user.contato !== null)
+          .filter(
+            (user) => user.contato !== null && user.tipoUsuario === "parceiro"
+          )
           .map((user) => ({ ...user.contato, id: user.id }));
 
         setResponsaveis(responsaveisData);
 
         dadosEvento.responsavel = responsaveisData[0];
       } catch (err) {
-        //console.log("Erro ao buscar responsáveis: " + err);
+        console.error("Erro ao buscar responsáveis: " + err);
         alerta.error("Erro ao buscar responsáveis");
       }
     };
