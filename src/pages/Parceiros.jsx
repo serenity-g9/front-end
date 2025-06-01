@@ -141,7 +141,6 @@ const CardUsuario = ({ user }) => {
         return;
       }
 
-      setUsuariosData([]);
       alerta.success(`Usuário ${user.contato.nome} ativado com sucesso`);
     });
 
