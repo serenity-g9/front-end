@@ -55,7 +55,6 @@ const CriarEvento = () => {
 
     try {
       const response = await postEvento(request, imagem);
-      [];
 
       if (response.error) {
         alerta.error("Não foi possível criar evento");
@@ -63,6 +62,11 @@ const CriarEvento = () => {
       }
 
       alerta.success("Evento criado com sucesso");
+
+      if (!response.imagem) {
+        alerta.warning("Evento criado sem imagem");
+      }
+
       navigate(-1);
     } catch (err) {
       alerta.error("Não foi possível criar evento");
