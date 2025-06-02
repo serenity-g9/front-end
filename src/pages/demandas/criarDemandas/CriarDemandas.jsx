@@ -113,7 +113,8 @@ const CriarDemandas = () => {
     const buscarEvento = async () => {
       try {
         const data = await fetchData(`eventos`);
-        setEventos(data);
+
+        setEventos(data.filter((evento) => evento.status !== "Finalizado"));
       } catch (err) {
         //console.log("Erro ao buscar evento: " + err);
         alerta.error("Erro ao buscar evento");
