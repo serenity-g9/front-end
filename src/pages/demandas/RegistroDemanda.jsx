@@ -279,41 +279,42 @@ const RegistroDemanda = () => {
             padding: "6px",
           }}
         >
-          {params.row.usuario ? (
-            <Tooltip title="Remover agendamento">
-              <ButtonBase
-                key={`view-${params.id}`}
-                sx={{ marginRight: 0.5, borderRadius: 2 }}
-                onClick={() => handleDesfazerConvite(params.row.id)}
-              >
-                <Box
-                  display={"flex"}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  width={39}
+          {!["Confirmado", "Finalizado"].includes(params.row.status) &&
+            (params.row.usuario ? (
+              <Tooltip title="Remover agendamento">
+                <ButtonBase
+                  key={`view-${params.id}`}
+                  sx={{ marginRight: 0.5, borderRadius: 2 }}
+                  onClick={() => handleDesfazerConvite(params.row.id)}
                 >
-                  <PersonRemoveIcon sx={{ color: "error.main" }} />
-                </Box>
-              </ButtonBase>
-            </Tooltip>
-          ) : (
-            <Tooltip title="Convidar usuário">
-              <ButtonBase
-                key={`view-${params.id}`}
-                sx={{ marginRight: 0.5, borderRadius: 2 }}
-                onClick={() => handleConvidarAgendamento(params.row)}
-              >
-                <Box
-                  display={"flex"}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  width={39}
+                  <Box
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    width={39}
+                  >
+                    <PersonRemoveIcon sx={{ color: "error.main" }} />
+                  </Box>
+                </ButtonBase>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Convidar usuário">
+                <ButtonBase
+                  key={`view-${params.id}`}
+                  sx={{ marginRight: 0.5, borderRadius: 2 }}
+                  onClick={() => handleConvidarAgendamento(params.row)}
                 >
-                  <PersonAddIcon sx={{ color: "#515151" }} />
-                </Box>
-              </ButtonBase>{" "}
-            </Tooltip>
-          )}
+                  <Box
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    width={39}
+                  >
+                    <PersonAddIcon sx={{ color: "#515151" }} />
+                  </Box>
+                </ButtonBase>{" "}
+              </Tooltip>
+            ))}
         </span>
       ),
     },
