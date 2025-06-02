@@ -16,6 +16,17 @@ const TipoContrato = ({
   handleErros,
   erros,
 }) => {
+  useEffect(() => {
+    handleDadosChange(
+      {
+        target: {
+          value: tiposContrato.find((contrato) => contrato.id === 0),
+        },
+      },
+      "tipoContrato"
+    );
+  }, []);
+
   const handleDocumentoChange = (e, name) => {
     const documento = tiposContrato.find(
       (contrato) => contrato.id === e.target.value
@@ -57,7 +68,6 @@ const TipoContrato = ({
             value={dadosDemanda.tipoContrato.id}
             handleChange={handleDocumentoChange}
             items={tiposContrato}
-            required
             handleErros={handleErros}
           />
         </Grid>
