@@ -329,17 +329,23 @@ const Registro = ({
               <Box className="flexRowCenter" gap={1}>
                 {!struct.object.readOnly && (
                   <>
-                    {!struct.config?.blockEdit && (
-                      <Button
-                        disabled={editando}
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<EditIcon />}
-                        onClick={handleEditarObjeto}
-                      >
-                        Editar
-                      </Button>
-                    )}
+                    {!struct.config?.blockEdit &&
+                      !(
+                        (struct.object.name === "Evento" &&
+                          objeto.status === "Finalizado") ||
+                        (struct.object.name === "Demanda" &&
+                          objeto.evento?.status === "Finalizado")
+                      ) && (
+                        <Button
+                          disabled={editando}
+                          variant="contained"
+                          color="secondary"
+                          startIcon={<EditIcon />}
+                          onClick={handleEditarObjeto}
+                        >
+                          Editar
+                        </Button>
+                      )}
                     {!struct.config?.blockDelete && (
                       <Button
                         disabled={editando}
