@@ -90,10 +90,10 @@ const ConfirmarAgendamento = () => {
           {agendamento && (
             <Box width="80%" margin="auto">
               <Typography variant="h5" fontWeight="bold">
-                {agendamento.usuario.contato.nome}
+                {agendamento?.usuario?.contato?.nome}
               </Typography>
               <Typography variant="body2">
-                {agendamento.usuario.email}
+                {agendamento?.usuario?.email}
               </Typography>
               <Grid2 mt={5} container spacing={2}>
                 <Grid2 item size={6}>
@@ -102,14 +102,14 @@ const ConfirmarAgendamento = () => {
                     sx={{ mb: 2 }}
                     fullWidth
                     variant="standard"
-                    value={agendamento.usuario.contato.nome}
+                    value={agendamento?.usuario?.contato?.nome}
                   />
                   <TextField
                     label="Email"
                     sx={{ mb: 2 }}
                     fullWidth
                     variant="standard"
-                    value={agendamento.usuario.email}
+                    value={agendamento?.usuario?.email}
                   />
                   <TextField
                     label="Idade"
@@ -117,7 +117,7 @@ const ConfirmarAgendamento = () => {
                     fullWidth
                     variant="standard"
                     value={dayjs().diff(
-                      dayjs(agendamento.usuario.contato.dataNascimento),
+                      dayjs(agendamento?.usuario?.contato?.dataNascimento),
                       "year"
                     )}
                   />
@@ -126,7 +126,7 @@ const ConfirmarAgendamento = () => {
                     sx={{ mb: 2 }}
                     fullWidth
                     variant="standard"
-                    value={agendamento.nome}
+                    value={agendamento?.nome}
                   />
                 </Grid2>
                 <Grid2 item size={6}>
@@ -135,14 +135,14 @@ const ConfirmarAgendamento = () => {
                     sx={{ mb: 2 }}
                     fullWidth
                     variant="standard"
-                    value={agendamento.usuario.contato.cpf}
+                    value={agendamento?.usuario?.contato?.cpf}
                   />
                   <TextField
                     label="Celular"
                     sx={{ mb: 2 }}
                     fullWidth
                     variant="standard"
-                    value={agendamento.usuario.contato.celular.replace(
+                    value={agendamento?.usuario?.contato?.celular?.replace(
                       /(\d{2})(\d{5})(\d{4})/,
                       "($1) $2-$3"
                     )}
@@ -152,7 +152,7 @@ const ConfirmarAgendamento = () => {
                     sx={{ mb: 2 }}
                     fullWidth
                     variant="standard"
-                    value={agendamento.funcao}
+                    value={agendamento?.funcao}
                   />
                 </Grid2>
               </Grid2>
