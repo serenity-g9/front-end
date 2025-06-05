@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchData, patchParamsData } from "../services/DataService";
+import {
+  deleteData,
+  fetchData,
+  patchParamsData,
+} from "../services/DataService";
 import { useAlerta } from "../context/AlertaContext";
 import { Box, Grid2, Rating, TextField, Typography } from "@mui/material";
 import PageModal from "../components/pageModal/PageModal";
@@ -40,8 +44,16 @@ const ConfirmarAgendamento = () => {
     navigate("/demandas/" + agendamento.escala.demanda.id);
   };
 
-  const handleRejeitar = () => {
-    navigate("/eventos");
+  const handleRejeitar = async () => {
+    const response = await deleteData("agendamentos", agendamento.id);
+
+    if (response.error) {
+      alerta.error("Erro ao cancelar agendamento");
+      return;
+    }
+
+    alerta.success(`Agendamento cancelado`);
+    navigate("/demandas/" + agendamento.escala.demanda.id);
   };
 
   const btns = [
