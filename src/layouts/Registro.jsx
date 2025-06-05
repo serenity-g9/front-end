@@ -329,17 +329,23 @@ const Registro = ({
               <Box className="flexRowCenter" gap={1}>
                 {!struct.object.readOnly && (
                   <>
-                    {!struct.config?.blockEdit && (
-                      <Button
-                        disabled={editando}
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<EditIcon />}
-                        onClick={handleEditarObjeto}
-                      >
-                        Editar
-                      </Button>
-                    )}
+                    {!struct.config?.blockEdit &&
+                      !(
+                        (struct.object.name === "Evento" &&
+                          objeto.status === "Finalizado") ||
+                        (struct.object.name === "Demanda" &&
+                          objeto.evento?.status === "Finalizado")
+                      ) && (
+                        <Button
+                          disabled={editando}
+                          variant="contained"
+                          color="secondary"
+                          startIcon={<EditIcon />}
+                          onClick={handleEditarObjeto}
+                        >
+                          Editar
+                        </Button>
+                      )}
                     {!struct.config?.blockDelete && (
                       <Button
                         disabled={editando}
@@ -388,6 +394,7 @@ const Registro = ({
               setGuia={setGuia}
               guiaActions={struct.tabsAction}
               objeto={objeto}
+              tipoObjeto={struct.object.name}
             />
 
             <OutlinedBox sx={{ mt: 3 }}>
@@ -605,13 +612,17 @@ const Registro = ({
   );
 };
 
-const Guias = ({ guias, guiaActions, objeto }) => {
+const Guias = ({ guias, guiaActions, objeto, tipoObjeto }) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { mobile } = useLayout();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const actualTab = searchParams.get("tab");
+
+  const showActions =
+    !(tipoObjeto === "Evento" && objeto.status === "Finalizado") &&
+    !(tipoObjeto === "Demanda" && objeto.evento.status === "Finalizado");
 
   return (
     <Box className="flexRowBetween">
@@ -646,7 +657,7 @@ const Guias = ({ guias, guiaActions, objeto }) => {
           })}
       </Box>
 
-      {guiaActions && (
+      {showActions && guiaActions && (
         <ButtonGroup
           variant="contained"
           color="secondary"

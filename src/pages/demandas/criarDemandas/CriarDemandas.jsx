@@ -113,7 +113,8 @@ const CriarDemandas = () => {
     const buscarEvento = async () => {
       try {
         const data = await fetchData(`eventos`);
-        setEventos(data);
+
+        setEventos(data.filter((evento) => evento.status !== "Finalizado"));
       } catch (err) {
         //console.log("Erro ao buscar evento: " + err);
         alerta.error("Erro ao buscar evento");
@@ -130,11 +131,13 @@ const CriarDemandas = () => {
         const data = await fetchData(`usuarios`);
         setResponsaveis(
           data
-            .filter((user) => user.contato !== null)
+            .filter(
+              (user) => user.contato !== null && user.tipoUsuario === "parceiro"
+            )
             .map((user) => ({ ...user.contato, id: user.id }))
         );
       } catch (err) {
-        //console.log("Erro ao buscar evento: " + err);
+        console.error("Erro ao buscar responsáveis: " + err);
         alerta.error("Erro ao buscar responsáveis");
       }
     };
