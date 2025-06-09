@@ -87,12 +87,14 @@ const MenuPerfil = () => {
           onClick={handleClick}
           sx={{ borderRadius: "50%" }}
         >
-          <Avatar>L</Avatar>
+          <Avatar>{Cookies.get("nome")[0]}</Avatar>
         </ButtonBase>
       </Tooltip>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem id="item1" onClick={handleClose}>
-          <Avatar sx={{ width: 25, height: 25 }}>L</Avatar>{" "}
+          <Avatar sx={{ width: 25, height: 25 }}>
+            {Cookies.get("nome")[0]}
+          </Avatar>{" "}
           <Typography ml={1} mr={2}>
             {Cookies.get("nome")}
           </Typography>
