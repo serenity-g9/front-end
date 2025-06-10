@@ -156,7 +156,7 @@ const CardUsuario = ({ user }) => {
       <CardMedia
         component="img"
         height={140}
-        image="https://dummyimage.com/800x800/eee/000"
+        image={user.imagem?.url || "https://dummyimage.com/800x800/eee/000"}
       />
       <CardContent>
         <Box

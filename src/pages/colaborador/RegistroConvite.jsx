@@ -62,43 +62,43 @@ const RegistroConvite = () => {
     },
     header: {
       fields: [
-        {
-          name: "Evento",
-          value: "nome",
-          type: "text",
-        },
-        {
-          name: "Função",
-          value: "funcao",
-          type: "text",
-        },
-        {
-          name: "Cachê",
-          value: "cache",
-          type: "currency",
-        },
-        {
-          name: "Entrada",
-          value: "horarioEntrada",
-          type: "date",
-        },
-        {
-          name: "Local",
-          value: "endereco.local",
-          type: "text",
-        },
+        // {
+        //   name: "Evento",
+        //   value: "nome",
+        //   type: "text",
+        // },
+        // {
+        //   name: "Função",
+        //   value: "funcao",
+        //   type: "text",
+        // },
+        // {
+        //   name: "Cachê",
+        //   value: "cache",
+        //   type: "currency",
+        // },
+        // {
+        //   name: "Entrada",
+        //   value: "horarioEntrada",
+        //   type: "date",
+        // },
+        // {
+        //   name: "Local",
+        //   value: "endereco.local",
+        //   type: "text",
+        // },
       ],
     },
     headerActions: [
+      // {
+      //   label: "Cancelar",
+      //   icon: <ClearIcon />,
+      //   variant: "outlined",
+      //   color: "error",
+      //   action: (objeto) => console.log(objeto),
+      // },
       {
-        label: "Cancelar",
-        icon: <ClearIcon />,
-        variant: "outlined",
-        color: "error",
-        action: (objeto) => console.log(objeto),
-      },
-      {
-        label: "Check-in",
+        label: "Check‑in",
         icon: <QrCodeIcon />,
         variant: "contained",
         color: "secondary",

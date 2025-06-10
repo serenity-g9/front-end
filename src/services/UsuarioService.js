@@ -13,12 +13,13 @@ export const logar = async (dados) => {
 
     if (response.status !== 200) return;
 
-    const { token, id, tipoUsuario, contato } = response.data;
+    const { token, id, tipoUsuario, contato, imagem } = response.data;
     
     Cookies.set('TOKEN', token);
     Cookies.set("ID", id);
     Cookies.set("tipoUsuario", tipoUsuario);
     Cookies.set("nome", contato.nome);
+    Cookies.set("profile_picture_url", imagem?.url);
 
     return response.data; 
   } catch (err) {
