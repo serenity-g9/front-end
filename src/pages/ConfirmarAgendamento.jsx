@@ -89,16 +89,14 @@ const ConfirmarAgendamento = () => {
   return (
     <PageModal>
       <Grid2 container columnSpacing={2}>
-        {/* <Grid2 item size={4}>
-          <Box className="flexColumnCenter">
-            <Box width="60%">
-              <img width="100%" src="https://dummyimage.com/800x800/eee/000" />
+        {agendamento?.usuario?.imagem && (
+          <Grid2 item size={4}>
+            <Box className="flexColumnCenter">
+              <img width="100%" src={agendamento?.usuario?.imagem?.url} />
             </Box>
-            <Rating defaultValue={4} precision={0.5} readOnly />
-            <Typography>Detalhes do agendamento </Typography>
-          </Box>
-        </Grid2> */}
-        <Grid2 mt={10} item size={12}>
+          </Grid2>
+        )}
+        <Grid2 mt={10} item size={8}>
           {agendamento && (
             <Box width="80%" margin="auto">
               <Typography variant="h5" fontWeight="bold">

@@ -62,7 +62,8 @@ export default Navbar;
 const MenuPerfil = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
+  const profilePictureUrl = Cookies.get("profile_picture_url");
+  const nome = Cookies.get("nome");
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -87,14 +88,19 @@ const MenuPerfil = () => {
           onClick={handleClick}
           sx={{ borderRadius: "50%" }}
         >
-          <Avatar>{Cookies.get("nome")[0]}</Avatar>
+          <Avatar src={profilePictureUrl || undefined}>
+            {!profilePictureUrl && nome ? nome[0] : null}
+          </Avatar>
         </ButtonBase>
       </Tooltip>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem id="item1" onClick={handleClose}>
-          <Avatar sx={{ width: 25, height: 25 }}>
-            {Cookies.get("nome")[0]}
-          </Avatar>{" "}
+          <Avatar
+            sx={{ width: 25, height: 25 }}
+            src={profilePictureUrl || undefined}
+          >
+            {!profilePictureUrl && nome ? nome[0] : null}
+          </Avatar>
           <Typography ml={1} mr={2}>
             {Cookies.get("nome")}
           </Typography>

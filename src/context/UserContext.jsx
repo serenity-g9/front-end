@@ -20,6 +20,7 @@ export const UserProvider = ({ children }) => {
     Cookies.remove("ID");
     Cookies.remove("tipoUsuario");
     Cookies.remove("nome");
+    Cookies.remove("profile_picture_url");
   };
 
   useEffect(() => {

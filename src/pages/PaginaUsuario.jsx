@@ -124,7 +124,9 @@ const PaginaUsuario = () => {
         <Box sx={{ maxWidth: "300px", textAlign: "center", mr: 3 }}>
           <CardMedia
             component="img"
-            image="https://dummyimage.com/800x800/eee/000"
+            image={
+              usuario.imagem?.url || "https://dummyimage.com/800x800/eee/000"
+            }
             alt="Foto de perfil"
             sx={{
               width: 280,
@@ -155,7 +157,7 @@ const PaginaUsuario = () => {
               usuario.tipoUsuario.slice(1)}
           </Typography>
           {/* Exibição do Rating */}
-          <Box mt={2}>
+          {/* <Box mt={2}>
             <Typography variant="body1" fontWeight="bold" marginLeft={"140px"}>
               Avaliação:
             </Typography>
@@ -168,7 +170,7 @@ const PaginaUsuario = () => {
                 marginLeft: "140px", // Ajuste a margem para a esquerda
               }}
             />
-          </Box>
+          </Box> */}
         </Box>
 
         {/* Coluna Direita */}
