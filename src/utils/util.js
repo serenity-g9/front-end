@@ -181,6 +181,12 @@ export const formatPercentage = (value) => {
   }).format(value);
 }
 
+export const captalizarPrimeiraLetra = (value) => {
+  value = value.toLowerCase();
+
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
 export const emailRegex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
 
 export const guestPages = ["/login", "/cadastro"];

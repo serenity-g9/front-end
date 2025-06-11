@@ -21,6 +21,8 @@ const Home = () => {
   });
 
   const iconStyle = { color: "secondary", fontSize: "large" };
+  const profilePictureUrl = Cookies.get("profile_picture_url");
+  const nome = Cookies.get("nome");
 
   const homeItemsParceiro = [
     {
@@ -41,7 +43,7 @@ const Home = () => {
     {
       label: "Equipe",
       icon: <GroupOutlinedIcon {...iconStyle} />,
-      linkTo: "/parceiros",
+      linkTo: "/funcionarios",
     },
     {
       label: "Check-in",
@@ -73,7 +75,12 @@ const Home = () => {
         className="flexRowStart"
         sx={{ bgcolor: "primary.main", p: 4, gap: 3, borderRadius: 2 }}
       >
-        <Avatar sx={{ width: 80, height: 80 }} />
+        <Avatar
+          sx={{ width: 80, height: 80 }}
+          src={profilePictureUrl || undefined}
+        >
+          {!profilePictureUrl && nome ? nome[0] : null}
+        </Avatar>
         <Typography color="white" variant="h5">
           Bem vindo(a), {Cookies.get("nome")}
         </Typography>

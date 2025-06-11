@@ -52,6 +52,7 @@ import QrCodeIcon from "@mui/icons-material/QrCode";
 import { useUser } from "../context/UserContext";
 import { guestPages } from "../utils/util";
 import GuestRoute from "./GuestRoute";
+import CriarFuncionario from "../pages/CriarFuncionario";
 
 const LayoutContext = createContext();
 export const useLayout = () => useContext(LayoutContext);
@@ -110,10 +111,10 @@ const Layout = () => {
             theme: "primary.lighter",
           },
           {
-            activePath: "/parceiros",
-            linkTo: "/parceiros",
+            activePath: "/funcionarios",
+            linkTo: "/funcionarios",
             icon: <ContactsOutlinedIcon />,
-            text: "Colaboradores",
+            text: "Funcionários",
             theme: "primary.lighter",
           },
         ],
@@ -262,7 +263,11 @@ const Layout = () => {
                   path="/formularios/:recordId"
                   element={<RegistroFormulario />}
                 />
-                <Route path="/parceiros" element={<Parceiros />} />
+                <Route path="/funcionarios" element={<Parceiros />} />
+                <Route
+                  path="/funcionarios/adicionar"
+                  element={<CriarFuncionario />}
+                />
                 <Route path="*" element={<NotFound />} />
               </Route>
               <Route
