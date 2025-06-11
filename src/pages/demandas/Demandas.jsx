@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Dialogo from "../../components/dialogo/Dialogo";
 import CardDemanda from "../../components/card/CardDemanda";
 import { Box, ButtonBase } from "@mui/material";
-import Botao from "../../components/btn/Botao";
 import CreateIcon from "@mui/icons-material/Create";
 import { useNavigate } from "react-router-dom";
 import { formatarCardDemanda } from "../../utils/util";
-import { getDemandas } from "../../utils/dataMockUtil";
 import MudarVisualizacao from "../../components/mudarVisualizacao/MudarVisualizacao";
-import EditIcon from "@mui/icons-material/Edit";
 import Tabela from "../../components/tabela/Tabela";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { fetchData } from "../../services/DataService";
 import { useLayout } from "../../layouts/Layout";
+import dayjs from "dayjs";
 
 const Demandas = () => {
   const { setTitulo, setActions } = useLayout();
@@ -20,13 +17,22 @@ const Demandas = () => {
   const [demandas, setDemandas] = useState([]);
   const [dataDemandas, setDataDemandas] = useState([]);
 
+  const queryParams = new URLSearchParams(location.search);
+  const view = queryParams.get("view");
+
   useEffect(() => {
     setTitulo("Demandas");
     listarDemandas();
   }, []);
 
   const listarDemandas = async () => {
-    const demandas = await fetchData("demandas");
+    const demandasData = await fetchData("demandas");
+
+    const demandas = demandasData.filter(
+      (demanda) =>
+        demanda.nome.toLowerCase().includes(filtroNome.toLowerCase()) ||
+        !filtroNome
+    );
 
     setDataDemandas(
       demandas.map((demanda) => ({ ...demanda, evento: demanda.evento.nome }))
@@ -34,15 +40,11 @@ const Demandas = () => {
     setDemandas(formatarCardDemanda(demandas));
   };
 
-  const handleEditClick = (id) => {
-    //console.log(id);
-  };
+  const [filtroNome, setFiltroNome] = useState("");
 
-  const handleViewClick = (id) => {
-    //console.log(id);
-  };
-
-  const [visualizacao, setVisualizacao] = useState("cards");
+  useEffect(() => {
+    listarDemandas();
+  }, [filtroNome]);
 
   const columns = [
     {
@@ -52,14 +54,20 @@ const Demandas = () => {
     },
     {
       field: "inicio",
-      headerName: "Inicio",
+      headerName: "Início",
       type: "text",
+      valueFormatter: (params) => {
+        return dayjs(params.value).format("MM/DD/YYYY HH:mm");
+      },
       flex: 1,
     },
     {
       field: "fim",
       headerName: "Fim",
       type: "text",
+      valueFormatter: (params) => {
+        return dayjs(params.value).format("MM/DD/YYYY HH:mm");
+      },
       flex: 1,
     },
     {
@@ -105,7 +113,7 @@ const Demandas = () => {
           <ButtonBase
             key={`view-${params.id}`}
             sx={{ marginRight: 0.5, borderRadius: 2 }}
-            onClick={() => navigate("demandas/" + params.id)}
+            onClick={() => navigate(params.id)}
           >
             <Box
               display={"flex"}
@@ -134,17 +142,22 @@ const Demandas = () => {
     setActions(actions);
   }, [setActions, navigate]);
 
+  const handleSearchChange = (e) => {
+    if (e.key !== "Enter") return;
+
+    setFiltroNome(e.target.value);
+
+    e.target.value = "";
+  };
+
   return (
     <Box>
       <MudarVisualizacao
-        setVisualizacao={setVisualizacao}
-        opcoesFiltro={[
-          { id: "abertas", value: "Abertas" },
-          { id: "em-andamento", value: "Fechadas" },
-          { id: "totais", value: "Totais", isDefault: true },
-        ]}
+        nomePesquisado={filtroNome}
+        setNomePesquisado={setFiltroNome}
+        handleSearchChange={handleSearchChange}
       />
-      {visualizacao === "cards" && (
+      {!view && (
         <Box display={"flex"} flexWrap={"wrap"} gap={2}>
           {demandas &&
             demandas.map((demanda, index) => {
@@ -160,9 +173,7 @@ const Demandas = () => {
             })}
         </Box>
       )}
-      {visualizacao === "lista" && (
-        <Tabela columns={columns} rows={dataDemandas} />
-      )}
+      {view === "list" && <Tabela columns={columns} rows={dataDemandas} />}
     </Box>
   );
 };
