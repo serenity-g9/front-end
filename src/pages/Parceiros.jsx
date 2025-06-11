@@ -3,11 +3,12 @@ import { getUsuarios } from "../utils/dataMockUtil";
 import {
   Box,
   Card,
-  CardActionArea,
+  IconButton,
   CardContent,
   CardMedia,
-  Rating,
-  Stack,
+  Menu,
+  Chip,
+  MenuItem,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
@@ -18,19 +19,35 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import CheckIcon from "@mui/icons-material/Check";
 import BlockIcon from "@mui/icons-material/Block";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import CreateIcon from "@mui/icons-material/Create";
 import dayjs from "dayjs";
 import { useLayout } from "../layouts/Layout";
 import Botao from "../components/btn/Botao";
 import { ativar, desativar } from "../services/UsuarioService";
+import { captalizarPrimeiraLetra } from "../utils/util";
 
 const Parceiros = () => {
   const { setTitulo, setActions } = useLayout();
 
   useEffect(() => {
-    setTitulo("Parceiros");
+    setTitulo("Funcionários");
     setActions(null);
   }, []);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const actions = [
+      {
+        label: "Adicionar",
+        handleClick: () => navigate("/funcionarios/adicionar"),
+        icon: <CreateIcon />,
+      },
+    ];
+
+    setActions(actions);
+  }, [setActions, navigate]);
 
   const alerta = useAlerta();
 
@@ -47,23 +64,22 @@ const Parceiros = () => {
   useEffect(() => {
     (async () => {
       const response = await fetchData("usuarios");
-      console.log("oi");
       if (response.error) {
         alerta.error("Não foi possível buscar usuários");
         return;
       }
+
+      console.log(response);
 
       setUsuariosData(response);
     })();
   }, [setUsuariosData, alerta]);
 
   useEffect(() => {
-    const a = status === "desativado";
-
     setUsuarios(
       usuariosData.filter(
         (user) =>
-          user.ativo !== a &&
+          user.ativo !== (status === "desativado") &&
           user.contato.nome.toLowerCase().includes(nomePesquisado.toLowerCase())
       )
     );
@@ -104,19 +120,21 @@ const Parceiros = () => {
 
 const CardUsuario = ({ user }) => {
   const navigate = useNavigate();
-
   const alerta = useAlerta();
   const { toggleDialog, setDialogAction, setDialogContent } = useLayout();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const menuOpen = Boolean(anchorEl);
+  const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
+  const handleMenuClose = () => setAnchorEl(null);
 
   const handleRemover = () => {
     setDialogAction(() => async () => {
       const response = await desativar(user.id);
-
       if (response.error) {
         alerta.error("Erro ao desativar " + user.contato.nome, "error");
         return;
       }
-
       alerta.success(`Usuário ${user.contato.nome} desativado com sucesso`);
     });
 
@@ -130,17 +148,16 @@ const CardUsuario = ({ user }) => {
       ),
     });
     toggleDialog();
+    handleMenuClose();
   };
 
   const handleAtivar = () => {
     setDialogAction(() => async () => {
       const response = await ativar(user.id);
-
       if (response.error) {
         alerta.error("Erro ao ativar " + user.contato.nome, "error");
         return;
       }
-
       alerta.success(`Usuário ${user.contato.nome} ativado com sucesso`);
     });
 
@@ -149,15 +166,63 @@ const CardUsuario = ({ user }) => {
       body: <>O usuário {user.contato.nome} será ativado.</>,
     });
     toggleDialog();
+    handleMenuClose();
   };
+
+  const idade = dayjs().diff(dayjs(user.contato.dataNascimento), "year");
 
   return (
     <Card>
-      <CardMedia
-        component="img"
-        height={140}
-        image={user.imagem?.url || "https://dummyimage.com/800x800/eee/000"}
-      />
+      <Box sx={{ position: "relative" }}>
+        <CardMedia
+          component="img"
+          height={140}
+          image={user.imagem?.url || "https://dummyimage.com/800x800/eee/000"}
+        />
+        {!user.ativo && (
+          <Chip
+            label="Inativo"
+            size="small"
+            color="primary"
+            sx={{
+              position: "absolute",
+              top: 8,
+              left: 8,
+              color: "white",
+              fontWeight: "bold",
+              textTransform: "uppercase",
+              zIndex: 1,
+            }}
+          />
+        )}
+
+        <IconButton
+          sx={{ position: "absolute", top: 8, right: 8, bgcolor: "#ffffff99" }}
+          onClick={handleMenuOpen}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={menuOpen}
+          onClose={handleMenuClose}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          {user.ativo ? (
+            <MenuItem onClick={handleRemover}>
+              <BlockIcon fontSize="small" sx={{ mr: 1 }} />
+              Desativar
+            </MenuItem>
+          ) : (
+            <MenuItem onClick={handleAtivar}>
+              <CheckIcon fontSize="small" sx={{ mr: 1 }} />
+              Ativar
+            </MenuItem>
+          )}
+        </Menu>
+      </Box>
+
       <CardContent>
         <Box
           className="flexColumn"
@@ -167,7 +232,7 @@ const CardUsuario = ({ user }) => {
             {user.contato.nome}
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            {dayjs().diff(dayjs(user.contato.dataNascimento), "year")} anos
+            {idade} anos
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             {user.email}
@@ -180,39 +245,16 @@ const CardUsuario = ({ user }) => {
                 )
               : "Número indisponível"}
           </Typography>
-          {/* <Stack mt={2}>
-              <Rating defaultValue={4} precision={0.5} readOnly />
-            </Stack> */}
-          <Box class="flexColumnCenter">
-            {user?.ativo && (
-              <>
-                <Botao
-                  sx={{ mt: 2 }}
-                  onClick={() => navigate("/usuarios/" + user.id)}
-                  txt="Visualizar"
-                  icon={<VisibilityIcon />}
-                />
-                <Botao
-                  sx={{ mt: 1 }}
-                  onClick={handleRemover}
-                  color="primary"
-                  variant="outlined"
-                  txt="Desativar"
-                  icon={<BlockIcon />}
-                />
-              </>
-            )}
-            {!user?.ativo && (
-              <>
-                <Botao
-                  sx={{ mt: 2 }}
-                  onClick={handleAtivar}
-                  txt="Ativar"
-                  color="primary"
-                  icon={<CheckIcon />}
-                />
-              </>
-            )}
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            {captalizarPrimeiraLetra(user.tipoUsuario)}
+          </Typography>
+          <Box className="flexColumnCenter">
+            <Botao
+              sx={{ mt: 2 }}
+              onClick={() => navigate("/usuarios/" + user.id)}
+              txt="Visualizar"
+              icon={<VisibilityIcon />}
+            />
           </Box>
         </Box>
       </CardContent>
