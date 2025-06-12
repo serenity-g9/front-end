@@ -185,7 +185,10 @@ const CriarEvento = () => {
 
         const responsaveisData = data
           .filter(
-            (user) => user.contato !== null && user.tipoUsuario === "parceiro"
+            (user) =>
+              user.ativo &&
+              user.contato !== null &&
+              user.tipoUsuario === "parceiro"
           )
           .map((user) => ({ ...user.contato, id: user.id }));
 
