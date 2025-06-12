@@ -18,6 +18,7 @@ import {
   FormControlLabel,
   Radio,
   Grid2,
+  Checkbox,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
@@ -44,6 +45,7 @@ const Cadastro = () => {
   }, [setTitulo, setActions]);
 
   const [loading, setLoading] = useState(false);
+  const [aceitaTermos, setAceitaTermos] = useState(false);
 
   const [dados, setDados] = useState({
     email: "",
@@ -338,7 +340,37 @@ const Cadastro = () => {
           </RadioGroup>
         </FormControl> */}
 
-        <Box sx={{ height: "17%" }} mt={4} className="flexRowCenter">
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={aceitaTermos}
+              onChange={(e) => setAceitaTermos(e.target.checked)}
+              color="secondary"
+            />
+          }
+          label={
+            <Typography variant="body2" sx={{ color: "#182F4E" }}>
+              Declaro que li e aceito os{" "}
+              <Box
+                component="a"
+                href="/termos"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  color: "secondary.main",
+                  textDecoration: "underline",
+                  fontWeight: 500,
+                }}
+              >
+                Termos de Uso
+              </Box>
+              .
+            </Typography>
+          }
+          sx={{ mt: 2, ml: 2 }}
+        />
+
+        <Box sx={{ height: "17%" }} mt={3} className="flexRowCenter">
           {!loading ? (
             <Botao
               sx={{
@@ -350,6 +382,7 @@ const Cadastro = () => {
               }}
               txt="Cadastrar"
               color="primary"
+              disabled={!aceitaTermos}
               onClick={handleCadastrar}
             />
           ) : (
