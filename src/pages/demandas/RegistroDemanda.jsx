@@ -437,13 +437,15 @@ const RegistroDemanda = () => {
     (async () => {
       const response = await fetchData("usuarios");
       setUserOptions(
-        response.map((item) => {
-          return {
-            id: item.email,
-            name: item.contato.nome,
-            email: item.email,
-          };
-        })
+        response
+          .filter((user) => user.ativo && user.tipoUsuario === "colaborador")
+          .map((item) => {
+            return {
+              id: item.email,
+              name: item.contato.nome,
+              email: item.email,
+            };
+          })
       );
     })();
 
